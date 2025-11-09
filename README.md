@@ -25,18 +25,32 @@ Set it up in your App proxy:
 
 And then attach the overlay to your main view:
 
+    import SwiftUI
+    import Durighe
+    
     struct ContentView: View {
+        @State var notificationActive: Bool = false
+        
         var body: some View {
             VStack {
                 Image(systemName: "globe")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                 Text("Hello, world!")
+                
+                Button(notificationActive ? "Deactivate" : "Activate") {
+                    notificationActive.toggle()
+                }
+                .buttonStyle(.borderedProminent)
             }
             .padding()
-            .noticeOverlay(configuration: noticeConfiguration)
+            .noticeOverlay(configuration: noticeConfiguration) {
+                notificationActive
+            }
         }
     }
+
+Notice that the overlay has a configurations as well as an active block; this can be used to prevent notices form displaying if certain criterias are not met (ie: before an onboarding sequence is completed).
 
 The remote URL must contain a file with this structure:
 

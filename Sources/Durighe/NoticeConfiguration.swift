@@ -23,7 +23,7 @@ public struct NoticeConfiguration {
 
     /// Interval for auto-refresh
     public let refreshInterval: TimeInterval
-
+    
     public init(
         remoteURL: URL,
         bannerBackground: Color = Color.blue,

@@ -12,6 +12,8 @@ internal import Combine
 
 struct NoticeOverlayModifier: ViewModifier {
     let configuration: NoticeConfiguration
+    var isActive: () -> Bool = { true }
+
     @State private var manager = NoticeManager.shared
     @State private var currentNotice: Notice?
 
@@ -22,7 +24,7 @@ struct NoticeOverlayModifier: ViewModifier {
         ZStack {
             content
 
-            if let notice = currentNotice {
+            if let notice = currentNotice, isActive() {
                 configuration.overlayColor
                     .ignoresSafeArea()
 
@@ -71,7 +73,7 @@ struct NoticeOverlayModifier: ViewModifier {
 
 
 extension View {
-    public func noticeOverlay(configuration: NoticeConfiguration) -> some View {
-        self.modifier(NoticeOverlayModifier(configuration: configuration))
+    public func noticeOverlay(configuration: NoticeConfiguration, isActive: @escaping() -> Bool = {true} ) -> some View {
+        self.modifier(NoticeOverlayModifier(configuration: configuration, isActive: isActive))
     }
 }
