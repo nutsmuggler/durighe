@@ -50,7 +50,7 @@ struct NoticeOverlayModifier: ViewModifier {
             // Initial notice check
             currentNotice = manager.displayableNotice()
         }
-        .onChange(of: manager.notices) {
+        .onChange(of: manager.notices) { _ in
             // New notices fetched from remote
             let newNotice = manager.displayableNotice()
             if newNotice?.id != currentNotice?.id {

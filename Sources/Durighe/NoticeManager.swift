@@ -1,11 +1,11 @@
 import Foundation
 import SwiftUI
 
-@Observable
-public final class NoticeManager {
+
+public final class NoticeManager: NSObject, ObservableObject {
     public static let shared = NoticeManager()
 
-    private(set) var notices: [Notice] = []
+    @Published var notices: [Notice] = []
 
     private let displayedStorageURL: URL = {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -19,7 +19,8 @@ public final class NoticeManager {
 
     private var displayedNoticeIDs: Set<UUID> = []
 
-    init() {
+    override init() {
+        super.init()
         loadDisplayedNotices()
         loadCachedNotices()
     }
