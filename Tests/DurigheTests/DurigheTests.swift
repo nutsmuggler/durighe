@@ -2,5 +2,15 @@ import Testing
 @testable import Durighe
 
 @Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    let manager = NoticeManager()
+    let start = Date()
+    let end = Date().addingTimeInterval(3600)
+    let notice = Notice(text: "Ciao",
+                        startDate: start,
+                        endDate: end,
+                        appVersion: "1.0.1")
+    let displayable = manager.noticeIsDisplayable(notice)
+    
+    #expect(displayable)
+    
 }

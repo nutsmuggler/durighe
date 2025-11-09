@@ -71,7 +71,7 @@ struct NoticeOverlayModifier: ViewModifier {
 
 
 extension View {
-    func noticeOverlay(configuration: NoticeConfiguration) -> some View {
+    public func noticeOverlay(configuration: NoticeConfiguration) -> some View {
         self.modifier(NoticeOverlayModifier(configuration: configuration))
     }
 }

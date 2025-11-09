@@ -6,13 +6,13 @@
 //
 import SwiftUI
 
-struct NoticeBanner: View {
+public struct NoticeBanner: View {
     let notice: Notice
     var backgroundColor: Color
     var textColor: Color
     var onDismiss: (() -> Void)?
 
-    var body: some View {
+    public var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 12) {
                 if let imageUrlString = notice.imageUrl,

@@ -16,16 +16,19 @@ struct Notice: Codable, Identifiable, Equatable {
     let imageUrl: String?
     let textColorHex: String?
     let backgroundColorHex: String?
+    let minimumAppVersion: String?
 
     init(
         id: UUID = UUID(),
         text: String,
         startDate: Date,
         endDate: Date,
-        urlString: String,
+        urlString: String? = nil,
         imageUrl: String? = nil,
         textColorHex: String? = nil,
-        backgroundColorHex: String? = nil
+        backgroundColorHex: String? = nil,
+        minimumAppVersion: String? = nil
+
     ) {
         self.id = id
         self.text = text
@@ -35,6 +38,7 @@ struct Notice: Codable, Identifiable, Equatable {
         self.imageUrl = imageUrl
         self.textColorHex = textColorHex
         self.backgroundColorHex = backgroundColorHex
+        self.minimumAppVersion = minimumAppVersion
     }
     
     var textColor: Color? {

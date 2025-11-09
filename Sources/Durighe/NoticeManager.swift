@@ -2,8 +2,8 @@ import Foundation
 import SwiftUI
 
 @Observable
-final class NoticeManager {
-    static let shared = NoticeManager()
+public final class NoticeManager {
+    public static let shared = NoticeManager()
 
     private(set) var notices: [Notice] = []
 
@@ -54,15 +54,23 @@ final class NoticeManager {
 
     // MARK: - Displayable Notice
 
+    func noticeIsDisplayable(_ notice: Notice) -> Bool {
+        let now = Date()
+        let isTimeValid = notice.startDate <= now && notice.endDate >= now
+        let hasNotBeenDislpayed = !displayedNoticeIDs.contains(notice.id)
+        var isForThisVersion = true
+        if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+           let minVersion = notice.minimumAppVersion {
+            isForThisVersion = minVersion.versionCompare(appVersion) != .orderedDescending
+        }
+        return isTimeValid && hasNotBeenDislpayed && isForThisVersion
+    }
+    
     @MainActor
     func displayableNotice() -> Notice? {
         let now = Date()
         let available = notices
-            .filter { notice in
-                notice.startDate <= now &&
-                notice.endDate >= now &&
-                !displayedNoticeIDs.contains(notice.id)
-            }
+            .filter { noticeIsDisplayable($0) }
             .sorted(by: { $0.startDate < $1.startDate })
 
         guard let notice = available.first else { return nil }
@@ -98,7 +106,7 @@ final class NoticeManager {
     private var refreshTask: Task<Void, Never>?
 
     /// Starts automatic refreshing every `interval` seconds, plus refresh on foreground.
-    func startAutoRefresh(configuration: NoticeConfiguration) {
+    public func startAutoRefresh(configuration: NoticeConfiguration) {
         // Cancel any existing task
         refreshTask?.cancel()
 
@@ -124,7 +132,7 @@ final class NoticeManager {
     }
 
     /// Stops automatic refresh (optional)
-    func stopAutoRefresh() {
+    public func stopAutoRefresh() {
         refreshTask?.cancel()
         refreshTask = nil
         NotificationCenter.default.removeObserver(self)
