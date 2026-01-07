@@ -42,6 +42,7 @@ public struct NoticeBanner: View {
                             .font(.headline)
                             .foregroundColor(notice.textColor ?? textColor)
                             .lineLimit(nil)
+                            .padding(.bottom, 4)
                     }
                     Text(notice.text)
                         .font(.body)
@@ -52,6 +53,7 @@ public struct NoticeBanner: View {
                         Text("Tap for more")
                             .font(.footnote)
                             .foregroundColor(textColor.opacity(0.7))
+                            .padding(.top, 4)
                     }
                 }
 

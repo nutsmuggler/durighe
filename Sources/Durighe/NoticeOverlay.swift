@@ -27,6 +27,10 @@ struct NoticeOverlayModifier: ViewModifier {
             if let notice = currentNotice, isActive() {
                 configuration.overlayColor
                     .ignoresSafeArea()
+                    .onTapGesture {
+                        currentNotice = nil
+                        manager.markAsDisplayed(notice)
+                    }
 
                 VStack {
                     NoticeBanner(
