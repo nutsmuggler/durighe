@@ -27,7 +27,9 @@ public final class NoticeManager: NSObject, ObservableObject {
     // MARK: - Loading
 
     func fetchNotices(from url: URL) async throws {
-        let (data, _) = try await URLSession.shared.data(from: url)
+        var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        let (data, _) = try await URLSession.shared.data(for: request)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         let fetched = try decoder.decode([Notice].self, from: data)
