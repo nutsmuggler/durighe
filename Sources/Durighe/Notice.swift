@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Notice: Codable, Identifiable, Equatable {
     let id: UUID
+    let title: String?
     let text: String
     let startDate: Date
     let endDate: Date
@@ -20,6 +21,7 @@ struct Notice: Codable, Identifiable, Equatable {
 
     init(
         id: UUID = UUID(),
+        title: String?,
         text: String,
         startDate: Date,
         endDate: Date,
@@ -31,6 +33,7 @@ struct Notice: Codable, Identifiable, Equatable {
 
     ) {
         self.id = id
+        self.title = title
         self.text = text
         self.startDate = startDate
         self.endDate = endDate

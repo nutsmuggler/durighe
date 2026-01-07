@@ -37,6 +37,12 @@ public struct NoticeBanner: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
+                    if let title = notice.title {
+                        Text(title)
+                            .font(.headline)
+                            .foregroundColor(notice.textColor ?? textColor)
+                            .lineLimit(nil)
+                    }
                     Text(notice.text)
                         .font(.body)
                         .foregroundColor(notice.textColor ?? textColor)
